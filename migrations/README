@@ -1,0 +1,29 @@
+alembic init migrations
+
+from src.database.models import Base
+from src.database.db import SQLALCHEMY_DATABASE_URL
+
+target_metadata = Base.metadata
+
+url = config.set_main_option("sqlalchemy.url", SQLALCHEMY_DATABASE_URL)
+
+alembic revision --autogenerate -m 'Init'
+
+alembic upgrade head
+
+
+
+docker-compose.yml
+version: '3'
+
+services:
+  sqlite3:
+    image: nouchka/sqlite3:latest
+    stdin_open: true
+    tty: true
+    volumes:
+      - ./db/:/root/db/
+
+https://ru.stackoverflow.com/questions/1375774/%D0%9D%D0%B5-%D1%81%D0%BE%D1%85%D1%80%D0%B0%D0%BD%D1%8F%D1%8E%D1%82%D1%81%D1%8F-%D0%B4%D0%B0%D0%BD%D0%BD%D1%8B%D0%B5-sqlite-%D0%B2-docker-volume
+
+
